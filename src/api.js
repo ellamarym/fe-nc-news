@@ -21,3 +21,21 @@ export const getCommentsByArticleId = (articleID) => {
         return response.data.comments;
     })
 }
+
+export const upVoteArticleById = (articleID) => {
+    const patchBody = {
+        inc_votes: 1
+    }
+    return ncNewsApi.patch(`/articles/${articleID}`, patchBody).then((response) => {
+        return response.data.article;
+    })
+}
+
+export const downVoteArticleById = (articleID) => {
+    const patchBody = {
+        inc_votes: -1
+    }
+    return ncNewsApi.patch(`/articles/${articleID}`, patchBody).then((response) => {
+        return response.data.article;
+    })
+}
