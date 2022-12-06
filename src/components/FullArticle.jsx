@@ -10,7 +10,9 @@ export const FullArticle = () => {
     const [displayComments, setDisplayComments] = useState(false)
     const [commentViewToggle, setCommentViewToggle] = useState('View all Comments')
     const [articleVotes, setArticleVotes] = useState(0)
+    const [finishedVoting, setFinishedVoting] = useState(false)
     const {articleID} = useParams()
+    
 
     
     useEffect(() => {
@@ -32,8 +34,8 @@ export const FullArticle = () => {
             <h3>Created at: {created_at}</h3>
             <p>{body}</p>
             <h3>Votes: {articleVotes}</h3>
-            <button onClick={handleUpVote}>upVote</button>
-            <button onClick={handleDownVote}>downVote</button>
+            <button disabled={finishedVoting} onClick={handleUpVote}>upVote</button>
+            <button disabled={finishedVoting} onClick={handleDownVote}>downVote</button>
             <h3>Comments: {comment_count}</h3>
             <button onClick={displayCommentList}>{commentViewToggle}</button>
             </section>
@@ -41,13 +43,16 @@ export const FullArticle = () => {
     }
 
     function handleUpVote () {
+        setFinishedVoting(true)
         setArticleVotes((currentVotes) => {
             return currentVotes+1;
         })
         upVoteArticleById(articleID).then(() => {})
+        
     }
 
     function handleDownVote () {
+        setFinishedVoting(true)
         setArticleVotes((currentVotes) => {
             return currentVotes-1;
         })
