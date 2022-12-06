@@ -5,15 +5,19 @@ import { ArticleCard } from "./ArticleCard"
 
 export const Articles = ()=> {
     const[articlesList, setArticlesList] = useState([])
+    const[isLoading , setIsLoading] = useState(true)
 
     useEffect(()=> {
+        setIsLoading(true)
         getAllArticles().then((articles) => {
             setArticlesList(articles)
+            setIsLoading(false)
         })
     },[])
 
    function displayArticleList () {
-    return (
+
+    return isLoading ? <p>Loading all articles...</p>:(
         <ul className="articleList">
             {articlesList.map(({author, title, created_at, topic, comment_count, votes, article_id})=> {
                 return (

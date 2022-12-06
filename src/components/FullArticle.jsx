@@ -5,18 +5,20 @@ import { getIndividualArticle } from "../api"
 
 export const FullArticle = () => {
     const [articleToView, setArticleToView] = useState({})
+    const[isLoading , setIsLoading] = useState(true)
     const {articleID} = useParams()
     
     useEffect(() => {
+        setIsLoading(true)
         getIndividualArticle(articleID).then((article) => {
             setArticleToView(article)
-            console.log(articleToView)
+            setIsLoading(false)
         })
     },[])
 
     function displayArticle () {
         const {author, body, title, comment_count, votes, created_at} = articleToView 
-        return (
+        return isLoading? <p>Loading article...</p>:(
             <section>
             <h1>{title}</h1>
             <h2>Author: {author}</h2>
