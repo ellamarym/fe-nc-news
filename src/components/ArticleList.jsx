@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useState } from "react"
 import { getAllArticles } from "../api"
-import { Article } from "./Article"
+import { ArticleCard } from "./ArticleCard"
 
 export const Articles = ()=> {
     const[articlesList, setArticlesList] = useState([])
@@ -17,7 +17,7 @@ export const Articles = ()=> {
         <ul className="articleList">
             {articlesList.map(({author, title, created_at, topic, comment_count, votes, article_id})=> {
                 return (
-                    <Article key={article_id} author={author} title={title} created_at={created_at} topic={topic} comment_count={comment_count} votes={votes} article_id={article_id}/>
+                    <ArticleCard key={article_id} author={author} title={title} created_at={created_at} topic={topic} comment_count={comment_count} votes={votes} article_id={article_id}/>
                 )
             })}
         </ul>

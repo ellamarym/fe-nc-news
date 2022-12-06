@@ -3,13 +3,23 @@
   
 }
 
-.articlelist {
-  display: flex;
-}
 
 .articleCard {
   border: black solid 1px;
   list-style-type: none;
-  width: 80%;
-  margin: 5px;
+  width: 300px;
+  margin: 5px auto;
+  
+}
+
+li {
+  list-style-type: none;
+}
+
+@media only screen and (min-width: 600px) {
+  .articleList {
+    display: flex;
+    flex-wrap: wrap;
+    
+  }
 }
