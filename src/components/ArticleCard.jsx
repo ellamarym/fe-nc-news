@@ -4,7 +4,7 @@ export const ArticleCard = ({author, title, created_at, topic, comment_count, vo
 
     return (
     <li className= "articleCard" key={article_id}>
-        <h2>{title}</h2>
+        <h2 className="articleTitle">{title}</h2>
         <h3>Author: {author}</h3>
         <h3>Topic: {topic}</h3>
         <h4>Created at: {created_at}</h4>

@@ -1,15 +1,57 @@
+/* 
+#F4EFF2 WHITE
+#DCA57D BROWN
+#F54300 ORGANEY
+#868A89 GREY
+#24222A DARK BLUE
+*/
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
+  background-color: #F4EFF2;
+}
+
+Header {
+  background-color: #24222A ;
+  color: #F4EFF2;
+}
+
+.commentHeader{
+  border-top: #F54300 solid 2px;
+  background-color: #F4EFF2;
+  color: #24222A;
+}
+
+.commentCard p {
+  
+  background-color: #24222A;
+  color: #F4EFF2;
+}
+
+.navBar {
+  background-color: #F4EFF2;
+  color: #F54300;
+}
+
+.articleCard {
+  border: #F54300 solid 5px;
+  background-color: #24222A;
+  color: #F4EFF2;
+  list-style-type: none;
+  width: 300px;
+  height: 300px;
+  margin: 10px auto;
   
 }
 
-
-.articleCard {
-  border: black solid 1px;
-  list-style-type: none;
-  width: 300px;
-  margin: 5px auto;
-  
+.articleTitle {
+  background-color: #F54300;
+  color: #F4EFF2;
 }
 
 li {
