@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useState } from "react"
 import { useParams } from "react-router-dom"
-import { getIndividualArticle } from "../api"
+import { downVoteArticleById, getIndividualArticle, upVoteArticleById } from "../api"
 import { CommentList } from "./CommentList"
 
 export const FullArticle = () => {
@@ -9,13 +9,17 @@ export const FullArticle = () => {
     const[isLoading , setIsLoading] = useState(true)
     const [displayComments, setDisplayComments] = useState(false)
     const [commentViewToggle, setCommentViewToggle] = useState('View all Comments')
+    const [articleVotes, setArticleVotes] = useState(0)
     const {articleID} = useParams()
+
     
     useEffect(() => {
         setIsLoading(true)
         getIndividualArticle(articleID).then((article) => {
             setArticleToView(article)
+            setArticleVotes(article.votes)
             setIsLoading(false)
+            
         })
     },[])
 
@@ -27,11 +31,27 @@ export const FullArticle = () => {
             <h2>Author: {author}</h2>
             <h3>Created at: {created_at}</h3>
             <p>{body}</p>
-            <h3>Votes: {votes}</h3>
+            <h3>Votes: {articleVotes}</h3>
+            <button onClick={handleUpVote}>upVote</button>
+            <button onClick={handleDownVote}>downVote</button>
             <h3>Comments: {comment_count}</h3>
             <button onClick={displayCommentList}>{commentViewToggle}</button>
             </section>
         )
+    }
+
+    function handleUpVote () {
+        setArticleVotes((currentVotes) => {
+            return currentVotes+1;
+        })
+        upVoteArticleById(articleID).then(() => {})
+    }
+
+    function handleDownVote () {
+        setArticleVotes((currentVotes) => {
+            return currentVotes-1;
+        })
+        downVoteArticleById(articleID).then(() => {})
     }
 
     function displayCommentList () {
