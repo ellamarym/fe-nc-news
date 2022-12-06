@@ -16,7 +16,6 @@ export const Articles = ()=> {
     },[])
 
    function displayArticleList () {
-
     return isLoading ? <p>Loading all articles...</p>:(
         <ul className="articleList">
             {articlesList.map(({author, title, created_at, topic, comment_count, votes, article_id})=> {
