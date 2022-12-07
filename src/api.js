@@ -47,6 +47,13 @@ export const upVoteCommentById = (commentID) => {
     })
 }
 
+export const downVoteCommentById = (commentID) => {
+    const patchBody = {inc_votes: -1}
+    return ncNewsApi.patch(`/comments/${commentID}`, patchBody).then((response) => {
+        return response.data.comment
+    })
+}
+
 export const postCommentByArticleId = (articleID, comment) => {
     const newComment = {
         username: 'tickle122',
@@ -55,5 +62,17 @@ export const postCommentByArticleId = (articleID, comment) => {
     
     return ncNewsApi.post(`/articles/${articleID}/comments`, newComment).then((response) => {
         return response.data.comment;
+    })
+}
+
+export const getAllTopics = () => {
+    return ncNewsApi.get(`/topics`).then((response) => {
+        return response.data.topics
+    })
+} 
+
+export const getAllUsers = () => {
+    return ncNewsApi.get(`/users`).then((response)=> {
+        return response.data.users
     })
 }
