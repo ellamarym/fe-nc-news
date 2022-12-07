@@ -39,3 +39,21 @@ export const downVoteArticleById = (articleID) => {
         return response.data.article;
     })
 }
+
+export const upVoteCommentById = (commentID) => {
+    const patchBody = {inc_votes: 1}
+    return ncNewsApi.patch(`/comments/${commentID}`, patchBody).then((response) => {
+        return response.data.comment
+    })
+}
+
+export const postCommentByArticleId = (articleID, comment) => {
+    const newComment = {
+        username: 'tickle122',
+        body: comment
+    }
+    
+    return ncNewsApi.post(`/articles/${articleID}/comments`, newComment).then((response) => {
+        return response.data.comment;
+    })
+}
