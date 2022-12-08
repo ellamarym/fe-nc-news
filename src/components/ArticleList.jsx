@@ -47,9 +47,7 @@ export const Articles = ()=> {
 
     function filterByTopic () {
         return (
-            <form onSubmit={(e) => {
-                handleSubmit(e);
-              }}>
+            <form >
             <label htmlfor='chooseTopic'> Filter By Topic</label>
             <select name='chooseTopic' onChange={changeHandler}>
             <option>Show all</option>
@@ -57,14 +55,11 @@ export const Articles = ()=> {
             return <option  value={slug}>{slug}</option>;
           })}
         </select>
-        <button type='submit'>Go!</button>
         </form>
             )    
     }
 
-    function handleSubmit(e) {
-        console.log(e.target)
-    }
+   
 
    function displayArticleList () {
     return isLoading ? <p>Loading all articles...</p>:(

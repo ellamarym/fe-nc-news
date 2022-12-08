@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { TopicContext } from "../contexts/TopicContext"
 
 export const TopicCard = ({ slug, description}) =>{
-const {setTopic, topic} = useContext(TopicContext)
+const {setTopic} = useContext(TopicContext)
 
 
 

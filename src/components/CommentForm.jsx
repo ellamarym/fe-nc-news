@@ -2,8 +2,7 @@ import { useContext, useState } from "react"
 import { UserContext } from "../contexts/UserContext"
 import { postCommentByArticleId } from "../api"
 import { Link } from "react-router-dom";
-import { CommentCard } from "./CommentCard";
-import { CommentList } from "./CommentList";
+
 
 export const CommentForm = ({ articleID, setDisplayedCommentCount, commentInputted, setCommentInputted, newComment, setNewComment}) => {
     const{user} = useContext(UserContext)
@@ -29,7 +28,6 @@ export const CommentForm = ({ articleID, setDisplayedCommentCount, commentInputt
        }
     }
 
-    console.log(currentComments)
      function handleCommentInputChange(e) {
         setFinishedCommenting(false)
         setCommentInputted(e.target.value)

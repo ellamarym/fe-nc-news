@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { downVoteArticleById, getIndividualArticle, upVoteArticleById } from "../api"
-import { CommentForm } from "./CommentForm"
+
 import { CommentList } from "./CommentList"
 
 export const FullArticle = () => {
@@ -14,13 +14,12 @@ export const FullArticle = () => {
     const [haveVoted, setHaveVoted] = useState(false)
     const [votedUp, setVotedUp] = useState(false)
     const [votedDown, setVotedDown] = useState(false)
-    const [createAComment, setCreateAComment] = useState(false)
+    const [, setCreateAComment] = useState(false)
     const [displayedCommentCount, setDisplayedCommentCount] = useState()
     const {articleID} = useParams()
     
    
-    const [createdComments, setCreatedComments] = useState([])
-
+    
 
     
 
