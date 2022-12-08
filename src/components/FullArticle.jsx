@@ -2,7 +2,6 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { downVoteArticleById, getIndividualArticle, upVoteArticleById } from "../api"
-import { CommentForm } from "./CommentForm"
 import { CommentList } from "./CommentList"
 
 export const FullArticle = () => {
@@ -14,12 +13,12 @@ export const FullArticle = () => {
     const [haveVoted, setHaveVoted] = useState(false)
     const [votedUp, setVotedUp] = useState(false)
     const [votedDown, setVotedDown] = useState(false)
-    const [createAComment, setCreateAComment] = useState(false)
+    const [ setCreateAComment] = useState(false)
     const [displayedCommentCount, setDisplayedCommentCount] = useState()
     const {articleID} = useParams()
     
    
-    const [createdComments, setCreatedComments] = useState([])
+    
 
 
     
@@ -36,7 +35,10 @@ export const FullArticle = () => {
     },[])
     
     function displayArticle () {
-        const {author, body, title, created_at} = articleToView 
+        if(articleToView.error) {
+            return <h2>ERROR: {articleToView.error}</h2>
+        } else {
+           const {author, body, title, created_at} = articleToView 
         return isLoading? <p>Loading article...</p>:(
             <section>
             <h1 className="articleTitle">{title}</h1>
@@ -49,7 +51,9 @@ export const FullArticle = () => {
             <h3>Comments: {displayedCommentCount}</h3>
             <button onClick={displayCommentList}>{commentViewToggle}</button>
             </section>
-        )
+        ) 
+        }
+        
     }
 
     function createCommentForm() {

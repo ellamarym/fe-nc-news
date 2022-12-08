@@ -1,13 +1,15 @@
-import { useState } from "react"
-import { downVoteCommentById, upVoteCommentById } from "../api"
+import { useContext, useState } from "react"
+import { deleteCommentById, downVoteCommentById, upVoteCommentById } from "../api"
+import { UserContext } from "../contexts/UserContext"
 
 export const CommentCard = ({author, created_at, votes, body, comment_id})=> {
     const [commentVotes, setCommentVotes] = useState(votes)
     const [haveVoted, setHaveVoted] = useState(false)
     const [votedUp, setVotedUp] = useState(false)
     const [votedDown, setVotedDown] = useState(false)
-
-    
+    const {user} = useContext(UserContext)
+    const [commentDeleted, setCommentDeleted] = useState(false)
+     
     
     function handleUpVote() {
         setHaveVoted(true)
@@ -44,8 +46,14 @@ export const CommentCard = ({author, created_at, votes, body, comment_id})=> {
         })
     }
 
+    function handleDelete() {
+        setCommentDeleted(true)
+        deleteCommentById(comment_id).then(() => {})
+    }
+
+    
     return (
-        
+        commentDeleted ? <h4>Comment Deleted!</h4> :
         <li key={comment_id} className='commentCard'>
             <section className="commentHeader">
                 <h4>Author: {author}</h4>
@@ -55,6 +63,8 @@ export const CommentCard = ({author, created_at, votes, body, comment_id})=> {
             <h4>Votes: {commentVotes}</h4>
             <button disabled={votedDown} onClick={ !haveVoted ? handleUpVote: handleReverseUpVote }>{!votedUp? <p>upVote</p> : <p>Undo</p>}</button>
             <button disabled={votedUp} onClick={!haveVoted ? handleDownVote: handleReverseDownVote}>{!votedDown? <p>downVote</p> : <p>Undo</p>}</button>
+            {user.username===author? <button onClick={handleDelete}>Delete comment</button> : null }
+
         </li>
     )
 }

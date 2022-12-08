@@ -19,22 +19,33 @@ export const Articles = ()=> {
     useEffect(()=> {
         setIsLoading(true)
         if(topic.length) {
-            getArticleByQuery(`topic=${topic}`).then((articles)=> {
+            if(queries.length){
+                getArticleByQuery(queries).then((articles) =>{
+                    setArticlesList(articles)
+                    setIsLoading(false)
+                })
+            } else {
+                getArticleByQuery(`topic=${topic}`).then((articles)=> {
                 setArticlesList(articles)
                 setIsLoading(false)
-            })
+            }) 
+            }
+           
         } else{
-           getAllArticles().then((articles) => {
+            if(queries.length){
+                getArticleByQuery(queries).then((articles) =>{
+                    setArticlesList(articles)
+                    setIsLoading(false)
+                })
+            } else {
+                getAllArticles().then((articles) => {
             setArticlesList(articles)
             setIsLoading(false)
         }) 
+            }
+           
         }
-        if(queries.length){
-            getArticleByQuery(queries).then((articles) =>{
-                setArticlesList(articles)
-                setIsLoading(false)
-            })
-        }
+        
         if(!topicList.length) {
             getAllTopics().then((allTopics)=> {
                 setTopicList(allTopics)
@@ -96,7 +107,7 @@ export const Articles = ()=> {
                     <option value='comment_count'>Comments: highest to lowest</option>
                     <option value='comment_count&order=asc'>Comments: lowest to highest</option>
                     <option value='votes'>Votes: highest to lowest</option>
-                    <option value='votes&order=desc'>Votes: lowest to highest</option>
+                    <option value='votes&order=asc'>Votes: lowest to highest</option>
                     <option value='author&order=asc'>Author: A to Z</option>
                     <option value='author'>Author: Z to A</option>
                 </select>
