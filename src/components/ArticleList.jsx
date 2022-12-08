@@ -1,19 +1,70 @@
 import { useEffect } from "react"
+import { useContext } from "react"
 import { useState } from "react"
-import { getAllArticles } from "../api"
+import { getAllArticles, getAllTopics, getArticleByTopic } from "../api"
+import { TopicContext } from "../contexts/TopicContext"
+import { TopicListContext } from "../contexts/TopicListContext"
 import { ArticleCard } from "./ArticleCard"
 
 export const Articles = ()=> {
     const[articlesList, setArticlesList] = useState([])
     const[isLoading , setIsLoading] = useState(true)
+    const {topic, setTopic} = useContext(TopicContext)
+    const {topicList, setTopicList} = useContext(TopicListContext)
+
+    
 
     useEffect(()=> {
         setIsLoading(true)
-        getAllArticles().then((articles) => {
+        if(topic.length) {
+            getArticleByTopic(topic).then((articles)=> {
+                setArticlesList(articles)
+                setIsLoading(false)
+            })
+        } else {
+           getAllArticles().then((articles) => {
             setArticlesList(articles)
             setIsLoading(false)
-        })
-    },[])
+        }) 
+        }
+        if(!topicList.length) {
+            getAllTopics().then((allTopics)=> {
+                setTopicList(allTopics)
+            })
+        }
+        
+    },[topic])
+
+    const changeHandler = (e) => {
+        e.preventDefault();
+        if(e.target.value === 'Show all') {
+            setTopic('')
+        } else {
+
+            setTopic(e.target.value);
+        }
+      };
+
+    function filterByTopic () {
+        return (
+            <form onSubmit={(e) => {
+                handleSubmit(e);
+              }}>
+            <label htmlfor='chooseTopic'> Filter By Topic</label>
+            <select name='chooseTopic' onChange={changeHandler}>
+            <option>Show all</option>
+            {topicList.map(({slug}) => {
+            return <option  value={slug}>{slug}</option>;
+          })}
+        </select>
+        <button type='submit'>Go!</button>
+        </form>
+            )    
+    }
+
+    function handleSubmit(e) {
+        console.log(e.target)
+    }
 
    function displayArticleList () {
     return isLoading ? <p>Loading all articles...</p>:(
@@ -29,6 +80,7 @@ export const Articles = ()=> {
 
     return (
         <section>
+            {filterByTopic()}
             {displayArticleList()}
         </section>
     )

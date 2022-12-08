@@ -78,8 +78,7 @@ export const getAllUsers = () => {
 }
 
 export const getArticleByTopic = (slug) => {
- return ncNewsApi.get(`/article?topic=${slug}`).then((response)=> {
-    console.log(response.data.articles)
+ return ncNewsApi.get(`/articles?topic=${slug}`).then((response)=> {
     return response.data.articles;
  })
 }

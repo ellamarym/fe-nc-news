@@ -1,6 +1,6 @@
 
 import { useContext } from "react"
-
+import { Link } from "react-router-dom";
 import { TopicContext } from "../contexts/TopicContext"
 
 export const TopicCard = ({ slug, description}) =>{
@@ -16,7 +16,7 @@ function setChosenTopic() {
         <li key={slug}>
             <h3>{slug}</h3>
             <p>{description}</p>
-           <button onClick={setChosenTopic}>Related articles</button>
+           <button onClick={setChosenTopic}><Link to='/articles'>Related articles</Link></button>
         </li>
      )
 }
