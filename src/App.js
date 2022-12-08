@@ -19,6 +19,7 @@ function App() {
         <Route path="/articles/:articleID" element={<FullArticle/>}/>
         <Route path="/topics" element={<TopicList/>}/>
         <Route path="/users" element={<UserList/>}/>
+        <Route path="/articles?queries" element={<Articles/>}/>
       </Routes>
     </div>
   );

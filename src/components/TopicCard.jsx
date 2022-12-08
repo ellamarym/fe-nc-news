@@ -16,7 +16,7 @@ function setChosenTopic() {
         <li key={slug}>
             <h3>{slug}</h3>
             <p>{description}</p>
-           <button onClick={setChosenTopic}><Link to='/articles'>Related articles</Link></button>
+           <button onClick={setChosenTopic}><Link to={`/articles?topic=${slug}`}>Related articles</Link></button>
         </li>
      )
 }

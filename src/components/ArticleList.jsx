@@ -1,7 +1,9 @@
 import { useEffect } from "react"
 import { useContext } from "react"
 import { useState } from "react"
-import { getAllArticles, getAllTopics, getArticleByTopic } from "../api"
+import { useNavigate } from "react-router-dom";
+
+import { getAllArticles, getAllTopics, getArticleByQuery } from "../api"
 import { TopicContext } from "../contexts/TopicContext"
 import { TopicListContext } from "../contexts/TopicListContext"
 import { ArticleCard } from "./ArticleCard"
@@ -9,23 +11,29 @@ import { ArticleCard } from "./ArticleCard"
 export const Articles = ()=> {
     const[articlesList, setArticlesList] = useState([])
     const[isLoading , setIsLoading] = useState(true)
+    const[queries, setQueries] = useState('')
     const {topic, setTopic} = useContext(TopicContext)
     const {topicList, setTopicList} = useContext(TopicListContext)
-
+    const navigate = useNavigate()
     
-
     useEffect(()=> {
         setIsLoading(true)
         if(topic.length) {
-            getArticleByTopic(topic).then((articles)=> {
+            getArticleByQuery(`topic=${topic}`).then((articles)=> {
                 setArticlesList(articles)
                 setIsLoading(false)
             })
-        } else {
+        } else{
            getAllArticles().then((articles) => {
             setArticlesList(articles)
             setIsLoading(false)
         }) 
+        }
+        if(queries.length){
+            getArticleByQuery(queries).then((articles) =>{
+                setArticlesList(articles)
+                setIsLoading(false)
+            })
         }
         if(!topicList.length) {
             getAllTopics().then((allTopics)=> {
@@ -33,38 +41,70 @@ export const Articles = ()=> {
             })
         }
         
-    },[topic])
-
-    const changeHandler = (e) => {
+    },[topic, queries])
+    
+    const selectHandler = (e) => {
         e.preventDefault();
+        
         if(e.target.value === 'Show all') {
             setTopic('')
+            navigate('/articles')
         } else {
-
-            setTopic(e.target.value);
+            setTopic(e.target.value)
+            navigate(`/articles?topic=${e.target.value}`);
         }
       };
 
     function filterByTopic () {
         return (
-            <form onSubmit={(e) => {
-                handleSubmit(e);
-              }}>
+            <form >
             <label htmlfor='chooseTopic'> Filter By Topic</label>
-            <select name='chooseTopic' onChange={changeHandler}>
-            <option>Show all</option>
+            <select name='chooseTopic' onChange={selectHandler}>
+            <option >Show all</option>
             {topicList.map(({slug}) => {
             return <option  value={slug}>{slug}</option>;
           })}
         </select>
-        <button type='submit'>Go!</button>
+        
         </form>
             )    
     }
 
-    function handleSubmit(e) {
-        console.log(e.target)
+    function sortHandler(e) {
+        e.preventDefault()
+        if(e.target.value !== 'placeholder'){
+          if(topic.length) {
+            setQueries(`topic=${topic}&sortby=${e.target.value}`)
+            navigate(`/articles?topic=${topic}&sortby=${e.target.value}`)
+        } else {
+            setQueries(`sortby=${e.target.value}`)
+            navigate(`/articles?sortby=${e.target.value}`)
+        }  
+        }
+         
+
     }
+
+    function sortBy () {
+        return (
+            <form>
+                <label htmlFor="sortby">Sort by</label>
+                <select name='sortBy' onChange = {sortHandler}>
+                    <option value='placeholder'></option>
+                    <option value='created_at'>Date: newest first</option>
+                    <option value='created_at&order=asc'>Date: oldest first</option>
+                    <option value='comment_count'>Comments: highest to lowest</option>
+                    <option value='comment_count&order=asc'>Comments: lowest to highest</option>
+                    <option value='votes'>Votes: highest to lowest</option>
+                    <option value='votes&order=desc'>Votes: lowest to highest</option>
+                    <option value='author&order=asc'>Author: A to Z</option>
+                    <option value='author'>Author: Z to A</option>
+                </select>
+            </form>
+        )
+    }
+
+   
 
    function displayArticleList () {
     return isLoading ? <p>Loading all articles...</p>:(
@@ -81,6 +121,7 @@ export const Articles = ()=> {
     return (
         <section>
             {filterByTopic()}
+            {sortBy()}
             {displayArticleList()}
         </section>
     )
