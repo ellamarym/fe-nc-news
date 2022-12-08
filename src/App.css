@@ -57,6 +57,9 @@ Header {
 li {
   list-style-type: none;
 }
+#header-user-image{
+  width: 40px;
+}
 
 @media only screen and (min-width: 600px) {
   .articleList {

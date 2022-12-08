@@ -1,12 +1,51 @@
 import { useState } from "react"
+import { downVoteCommentById, upVoteCommentById } from "../api"
 
 export const CommentCard = ({author, created_at, votes, body, comment_id})=> {
     const [commentVotes, setCommentVotes] = useState(votes)
+    const [haveVoted, setHaveVoted] = useState(false)
+    const [votedUp, setVotedUp] = useState(false)
+    const [votedDown, setVotedDown] = useState(false)
+
+    
+    
     function handleUpVote() {
+        setHaveVoted(true)
+        setVotedUp(true)
+        setCommentVotes((currentVotes) => {
+            return currentVotes+1;
+        })
+        upVoteCommentById(comment_id).then(()=> {})
     }
-    function handleDownVote() {}
+
+    function handleReverseUpVote () {
+        setHaveVoted(false)
+        setVotedUp(false)
+        setCommentVotes((currentVotes) => {
+            return currentVotes-1;
+        })
+        downVoteCommentById(comment_id).then(()=> {})
+    }
+
+    function handleDownVote() {
+        setHaveVoted(true)
+        setVotedDown(true)
+        setCommentVotes((currentVotes) => {
+            return currentVotes-1;
+        })
+        downVoteCommentById(comment_id).then(()=> {})
+    }
+
+    function handleReverseDownVote () {
+        setHaveVoted(false)
+        setVotedDown(false)
+        setCommentVotes((commentVotes)=> {
+            return commentVotes+1
+        })
+    }
 
     return (
+        
         <li key={comment_id} className='commentCard'>
             <section className="commentHeader">
                 <h4>Author: {author}</h4>
@@ -14,8 +53,8 @@ export const CommentCard = ({author, created_at, votes, body, comment_id})=> {
             </section>
             <p>{body}</p>
             <h4>Votes: {commentVotes}</h4>
-            <button onClick={handleUpVote}>upVote</button>
-            <button onClick={handleDownVote}>downVote</button>
+            <button disabled={votedDown} onClick={ !haveVoted ? handleUpVote: handleReverseUpVote }>{!votedUp? <p>upVote</p> : <p>Undo</p>}</button>
+            <button disabled={votedUp} onClick={!haveVoted ? handleDownVote: handleReverseDownVote}>{!votedDown? <p>downVote</p> : <p>Undo</p>}</button>
         </li>
     )
 }
