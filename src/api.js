@@ -76,3 +76,10 @@ export const getAllUsers = () => {
         return response.data.users
     })
 }
+
+export const getArticleByTopic = (slug) => {
+ return ncNewsApi.get(`/article?topic=${slug}`).then((response)=> {
+    console.log(response.data.articles)
+    return response.data.articles;
+ })
+}

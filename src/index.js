@@ -6,17 +6,20 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { TopicListProvider } from './contexts/TopicListContext';
 import { UserProvider } from './contexts/UserContext';
+import { TopicProvider } from './contexts/TopicContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+    <TopicProvider>
     <UserProvider>
     <TopicListProvider>
       <App />
     </TopicListProvider>
     </UserProvider>
+    </TopicProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

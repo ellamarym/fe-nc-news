@@ -19,7 +19,6 @@ function App() {
         <Route path="/articles/:articleID" element={<FullArticle/>}/>
         <Route path="/topics" element={<TopicList/>}/>
         <Route path="/users" element={<UserList/>}/>
-       
       </Routes>
     </div>
   );
