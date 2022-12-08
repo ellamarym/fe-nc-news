@@ -18,50 +18,38 @@ export const Articles = ()=> {
     
     useEffect(()=> {
         setIsLoading(true)
-        if(topic.length) {
-            if(queries.length){
-                getArticleByQuery(queries).then((articles) =>{
-                    setArticlesList(articles)
-                    setIsLoading(false)
-                })
-            } else {
-                getArticleByQuery(`topic=${topic}`).then((articles)=> {
-                setArticlesList(articles)
-                setIsLoading(false)
-            }) 
-            }
-           
-        } else{
-            if(queries.length){
-                getArticleByQuery(queries).then((articles) =>{
-                    setArticlesList(articles)
-                    setIsLoading(false)
-                })
-            } else {
-                getAllArticles().then((articles) => {
-            setArticlesList(articles)
-            setIsLoading(false)
-        }) 
-            }
-           
-        }
-        
         if(!topicList.length) {
             getAllTopics().then((allTopics)=> {
                 setTopicList(allTopics)
             })
         }
-        
+        if(queries.length ) {
+           getArticleByQuery(queries).then((articles) => {
+            setArticlesList(articles)
+            setIsLoading(false)
+        }) 
+        } else {
+            getAllArticles().then((articles)=> {
+                setArticlesList(articles)
+                setIsLoading(false)
+            })
+        }   
     },[topic, queries])
     
     const selectHandler = (e) => {
         e.preventDefault();
-        
+        setTopic(e.target.value)
         if(e.target.value === 'Show all') {
-            setTopic('')
+            setQueries('')
             navigate('/articles')
         } else {
-            setTopic(e.target.value)
+            setQueries((currentQuery) => {
+                if(currentQuery.includes('topic')) {
+                    return `topic=${e.target.value}`
+                } else {
+                    return `${currentQuery}&topic=${e.target.value}`
+                }               
+            })
             navigate(`/articles?topic=${e.target.value}`);
         }
       };
@@ -84,13 +72,16 @@ export const Articles = ()=> {
     function sortHandler(e) {
         e.preventDefault()
         if(e.target.value !== 'placeholder'){
-          if(topic.length) {
-            setQueries(`topic=${topic}&sortby=${e.target.value}`)
-            navigate(`/articles?topic=${topic}&sortby=${e.target.value}`)
-        } else {
-            setQueries(`sortby=${e.target.value}`)
-            navigate(`/articles?sortby=${e.target.value}`)
-        }  
+            if(topic.length) {
+                setQueries(`topic=${topic}&${e.target.value}`)
+                navigate(`/articles?topic=${topic}&${e.target.value}`)
+            } else {
+               setQueries(`${e.target.value}`) 
+               navigate(`/articles?${e.target.value}`)
+            }
+            
+          
+         
         }
          
 
@@ -102,14 +93,14 @@ export const Articles = ()=> {
                 <label htmlFor="sortby">Sort by</label>
                 <select name='sortBy' onChange = {sortHandler}>
                     <option value='placeholder'></option>
-                    <option value='created_at'>Date: newest first</option>
-                    <option value='created_at&order=asc'>Date: oldest first</option>
-                    <option value='comment_count'>Comments: highest to lowest</option>
-                    <option value='comment_count&order=asc'>Comments: lowest to highest</option>
-                    <option value='votes'>Votes: highest to lowest</option>
-                    <option value='votes&order=asc'>Votes: lowest to highest</option>
-                    <option value='author&order=asc'>Author: A to Z</option>
-                    <option value='author'>Author: Z to A</option>
+                    <option value='sortby=created_at'>Date: newest first</option>
+                    <option value='sortby=created_at&order=asc'>Date: oldest first</option>
+                    <option value='sortby=comment_count'>Comments: highest to lowest</option>
+                    <option value='sortby=comment_count&order=asc'>Comments: lowest to highest</option>
+                    <option value='sortby=votes'>Votes: highest to lowest</option>
+                    <option value='sortby=votes&order=asc'>Votes: lowest to highest</option>
+                    <option value='sortby=author&order=asc'>Author: A to Z</option>
+                    <option value='sortby=author'>Author: Z to A</option>
                 </select>
             </form>
         )
