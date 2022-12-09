@@ -96,7 +96,6 @@ export const getAllUsers = () => {
 
 export const getArticleByQuery = (queries) => {
  return ncNewsApi.get(`/articles?${queries}`).then((response)=> {
-    console.log(queries)
     return response.data.articles;
  }).catch((err) => {
     return {error: err.response.data.msg}
