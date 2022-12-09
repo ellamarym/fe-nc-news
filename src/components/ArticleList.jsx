@@ -106,11 +106,11 @@ export const Articles = ({  }) => {
             <form onSubmit={(e) => {
                 handleQuery(e);
               }}>
-                <label htmlfor='chooseTopic'> Filter By Topic</label>
+                <label htmlFor='chooseTopic'> Filter By Topic</label>
                 <select name='chooseTopic' onChange={topicHandler}>
-                    <option >Show all</option>
+                    <option key = 'showall'>Show all</option>
                     {topicList.map(({ slug }) => {
-                        return <option value={slug}>{slug}</option>;
+                        return <option key={slug} value={slug}>{slug}</option>;
                     })}
                 </select>
                 <label htmlFor="sortby">Sort by</label>
