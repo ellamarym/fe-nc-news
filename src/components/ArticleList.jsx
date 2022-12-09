@@ -73,7 +73,7 @@ export const Articles = ({  }) => {
             return <h2>ERROR: {articlesList.error}</h2>
         } else {
             return isLoading ? <p>Loading all articles...</p> : (
-                <ul className="articleList">
+                <ul className="article_list">
                     {articlesList.map(({ author, title, created_at, topic, comment_count, votes, article_id }) => {
                         return (
                             <ArticleCard key={article_id} author={author} title={title} created_at={created_at} topic={topic} comment_count={comment_count} votes={votes} article_id={article_id} />

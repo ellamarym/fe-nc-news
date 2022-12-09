@@ -7,7 +7,7 @@ export const Header = () => {
 
   function userDisplay (){
     if(user.username) {
-      return (<section>
+      return (<section className="user_login">
         <h3>Logged in as {user.username}</h3>
         <img id="header-user-image" src={user.avatar_url} alt={user.username}/>
         <Link to="/users">Switch user?</Link>
@@ -32,7 +32,7 @@ export const Header = () => {
           <h1>Inn4MayShon Newz 25</h1>
           <h3>Get inn4ormed</h3>
           </section>
-        <section className="userLogin">
+        <section className="user_login">
           
             {userDisplay()}
           </section>

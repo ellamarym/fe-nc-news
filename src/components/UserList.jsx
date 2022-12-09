@@ -16,7 +16,7 @@ export const UserList = () => {
 
 function displayUserList () {
     return isLoading ? <p>Loading all users...</p>:(
-        <ul className="userList">
+        <ul className="user_list">
             {userList.map(({avatar_url, name, username})=> {
                 return (
                     <UserCard key={username} avatar_url={avatar_url} name={name} username={username} />

@@ -18,13 +18,13 @@ const[isLoading , setIsLoading] = useState(true)
     }, [])
     function displayTopicList () {
         return isLoading ? <p>Loading all topics...</p>:(
-            <ul className="topicList">
+            <section className="topic_list">
                 {topicList.map(({slug, description, topicID})=> {
                     return (
-                        <TopicCard slug = {slug} description={description } />
+                        <TopicCard key={topicID} slug = {slug} description={description } topicID={topicID} />
                     )
                 })}
-            </ul>
+            </section>
         )
     }
     return (

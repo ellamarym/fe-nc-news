@@ -40,17 +40,20 @@ export const FullArticle = () => {
         } else {
            const {author, body, title, created_at} = articleToView 
         return isLoading? <p>Loading article...</p>:(
-            <section>
-            <h1 className="articleTitle">{title}</h1>
+            <section className="full_article">
+            <h1>{title}</h1>
             <h2>Author: {author}</h2>
-            <h3>Created at: {created_at}</h3>
+            <h2>Created at: {created_at}</h2>
             <p>{body}</p>
+            <section className="article_actions">
             <h3>Votes: {articleVotes}</h3>
             <button disabled={votedDown} onClick={ !haveVoted ? handleUpVote: handleReverseUpVote }>{!votedUp? <p>upVote</p> : <p>Undo</p>}</button>
             <button disabled={votedUp} onClick={!haveVoted ? handleDownVote: handleReverseDownVote}>{!votedDown? <p>downVote</p> : <p>Undo</p>}</button>
             <h3>Comments: {displayedCommentCount}</h3>
             <button onClick={displayCommentList}>{commentViewToggle}</button>
-            </section>
+           </section> 
+           
+           </section>
         ) 
         }
         
