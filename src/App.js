@@ -7,6 +7,7 @@ import { Header } from './components/Header';
 import { FullArticle } from './components/FullArticle';
 import { TopicList } from './components/TopicList';
 import { UserList } from './components/UserList';
+import { ErrorMessage } from './components/ErrorComponent';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/topics" element={<TopicList />}/>
         <Route path="/users" element={<UserList/>}/>
         <Route path="/articles?query" element={<Articles />}/>
+        <Route path="/*" element={<ErrorMessage />}/>
       </Routes>
     </div>
   );

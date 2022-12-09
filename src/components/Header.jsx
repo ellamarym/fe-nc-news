@@ -19,21 +19,19 @@ export const Header = () => {
 
      return (
         <header>
-          <nav className="navBar">
-            <ul>
-              <li >
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/articles">All Articles</Link>
-              </li>
-              <li>
-                <Link to="/topics">Topics</Link>
-              </li>
-            </ul>
+          <nav>
+            
+                <Link className="nav_link" to="/">Home</Link>
+            
+                <Link className="nav_link" to="/articles">All Articles</Link>
+             
+                <Link className="nav_link" to="/topics">Topics</Link>
+             
           </nav>
+          <section className="titles">
           <h1>Inn4MayShon Newz 25</h1>
-        <h3>Get inn4ormed</h3>
+          <h3>Get inn4ormed</h3>
+          </section>
         <section className="userLogin">
           
             {userDisplay()}
