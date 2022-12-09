@@ -8,10 +8,10 @@ export const CommentForm = ({ articleID, setDisplayedCommentCount, commentInputt
     const{user} = useContext(UserContext)
     const [finishedCommenting, setFinishedCommenting] = useState(false)
     
-   
+  
     function handlesubmit(e) {
         e.preventDefault()
-       if(commentInputted.length) {
+       if(commentInputted.body.length) {
            setFinishedCommenting(true)
            
            
@@ -20,7 +20,8 @@ export const CommentForm = ({ articleID, setDisplayedCommentCount, commentInputt
             return currentCount + 1;
         })
 
-        postCommentByArticleId(+articleID, commentInputted).then(() => { })
+        postCommentByArticleId(+articleID, commentInputted).then(() => { }) 
+        console.log(commentInputted)
         setCommentInputted('')
         document.getElementById('comment-input').value = ''
        }
@@ -28,7 +29,10 @@ export const CommentForm = ({ articleID, setDisplayedCommentCount, commentInputt
 
      function handleCommentInputChange(e) {
         setFinishedCommenting(false)
-        setCommentInputted(e.target.value)
+       
+        setCommentInputted(
+            {username: user.username,
+            body: e.target.value})
     }
 
     

@@ -19,8 +19,12 @@
 Header {
   background-color: #24222A ;
   color: #F4EFF2;
+  display: grid;
 }
 
+header section {
+  background-color: #F54300;
+}
 .commentHeader{
   border-top: #F54300 solid 2px;
   background-color: #F4EFF2;
@@ -36,6 +40,13 @@ Header {
 .navBar {
   background-color: #F4EFF2;
   color: #F54300;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.navBar li {
+  width: fit-content;
+  
 }
 
 .articleCard {

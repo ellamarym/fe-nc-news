@@ -69,12 +69,9 @@ export const downVoteCommentById = (commentID) => {
 }
 
 export const postCommentByArticleId = (articleID, comment) => {
-    const newComment = {
-        username: 'tickle122',
-        body: comment
-    }
+  
     
-    return ncNewsApi.post(`/articles/${articleID}/comments`, newComment).then((response) => {
+    return ncNewsApi.post(`/articles/${articleID}/comments`, comment).then((response) => {
         return response.data.comment;
     }).catch((err) => {
         return {error: err.response.data.msg}

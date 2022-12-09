@@ -61,23 +61,28 @@ export const Articles = ({  }) => {
 
 
     function sortHandler(e) {
-        if(e.target.value.length) {setSortByQuery(e.target.value)
-    }}
+        if(e.target.value !== 'placeholder') {setSortByQuery(e.target.value)
+    } else {setSortByQuery('')}}
 
     
 
 
 
     function displayArticleList() {
-        return isLoading ? <p>Loading all articles...</p> : (
-            <ul className="articleList">
-                {articlesList.map(({ author, title, created_at, topic, comment_count, votes, article_id }) => {
-                    return (
-                        <ArticleCard key={article_id} author={author} title={title} created_at={created_at} topic={topic} comment_count={comment_count} votes={votes} article_id={article_id} />
-                    )
-                })}
-            </ul>
-        )
+        if(articlesList.error) {
+            return <h2>ERROR: {articlesList.error}</h2>
+        } else {
+            return isLoading ? <p>Loading all articles...</p> : (
+                <ul className="articleList">
+                    {articlesList.map(({ author, title, created_at, topic, comment_count, votes, article_id }) => {
+                        return (
+                            <ArticleCard key={article_id} author={author} title={title} created_at={created_at} topic={topic} comment_count={comment_count} votes={votes} article_id={article_id} />
+                        )
+                    })}
+                </ul>
+            )
+
+        }
     }
 
     function handleQuery (e) {

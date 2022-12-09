@@ -19,11 +19,9 @@ export const Header = () => {
 
      return (
         <header>
-          <h1>Inn4MayShon Newz 25</h1>
-        <h3>Get inn4ormed</h3>
           <nav className="navBar">
             <ul>
-              <li>
+              <li >
                 <Link to="/">Home</Link>
               </li>
               <li>
@@ -34,9 +32,14 @@ export const Header = () => {
               </li>
             </ul>
           </nav>
-          <section>
+          <h1>Inn4MayShon Newz 25</h1>
+        <h3>Get inn4ormed</h3>
+        <section className="userLogin">
+          
             {userDisplay()}
           </section>
+          
+          
         </header>
       );
 } 
