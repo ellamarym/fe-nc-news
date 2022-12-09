@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { TopicListProvider } from './contexts/TopicListContext';
 import { UserProvider } from './contexts/UserContext';
 import { TopicProvider } from './contexts/TopicContext';
+import { QueriesProvider } from './contexts/QueriesContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -16,7 +17,9 @@ root.render(
     <TopicProvider>
     <UserProvider>
     <TopicListProvider>
+      <QueriesProvider>
       <App />
+    </QueriesProvider>
     </TopicListProvider>
     </UserProvider>
     </TopicProvider>

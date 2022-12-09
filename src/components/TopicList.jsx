@@ -5,7 +5,7 @@ import { getAllTopics } from "../api"
 import { TopicListContext } from "../contexts/TopicListContext"
 import { TopicCard } from "./TopicCard"
 
-export const TopicList = () => {
+export const TopicList = ({}) => {
 const {topicList, setTopicList} = useContext(TopicListContext)
 const[isLoading , setIsLoading] = useState(true)
 
@@ -21,7 +21,7 @@ const[isLoading , setIsLoading] = useState(true)
             <ul className="topicList">
                 {topicList.map(({slug, description, topicID})=> {
                     return (
-                        <TopicCard slug = {slug} description={description}  />
+                        <TopicCard slug = {slug} description={description } />
                     )
                 })}
             </ul>

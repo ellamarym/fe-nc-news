@@ -1,97 +1,115 @@
 import { useEffect } from "react"
 import { useContext } from "react"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate} from "react-router-dom";
 import { getAllArticles, getAllTopics, getArticleByQuery } from "../api"
-import { TopicContext } from "../contexts/TopicContext"
 import { TopicListContext } from "../contexts/TopicListContext"
 import { ArticleCard } from "./ArticleCard"
+import { TopicContext } from "../contexts/TopicContext";
 
-export const Articles = ()=> {
-    const[articlesList, setArticlesList] = useState([])
-    const[isLoading , setIsLoading] = useState(true)
-    const[queries, setQueries] = useState('')
-    const {topic, setTopic} = useContext(TopicContext)
-    const {topicList, setTopicList} = useContext(TopicListContext)
+
+export const Articles = ({  }) => {
+
+    const [articlesList, setArticlesList] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    const [queries, setQueries] = useState('')
+    const { topicList, setTopicList } = useContext(TopicListContext)
     const navigate = useNavigate()
+    const [topicQuery, setTopicQuery] = useState('')
+    const [sortByQuery, setSortByQuery] = useState('')
+    const {setTopic, topic} = useContext(TopicContext)
+
     
-    useEffect(()=> {
+
+    useEffect(() => {
         setIsLoading(true)
-        if(!topicList.length) {
-            getAllTopics().then((allTopics)=> {
+        if (!topicList.length) {
+            getAllTopics().then((allTopics) => {
                 setTopicList(allTopics)
             })
         }
-        if(queries.length ) {
-           getArticleByQuery(queries).then((articles) => {
-            setArticlesList(articles)
-            setIsLoading(false)
-        }) 
-        } else {
-            getAllArticles().then((articles)=> {
+        if(topic.length) {
+            getArticleByQuery(topic).then((articles) => {
+                setArticlesList(articles)
+                setIsLoading(false)
+                setTopic('')
+            })
+     } else if (queries.length) {
+           
+            getArticleByQuery(queries).then((articles) => {
                 setArticlesList(articles)
                 setIsLoading(false)
             })
-        }   
-    },[topic, queries])
-    
-    const selectHandler = (e) => {
-        e.preventDefault();
-        setTopic(e.target.value)
-        if(e.target.value === 'Show all') {
-            setQueries('')
-            navigate('/articles')
-        } else {
-            setQueries((currentQuery) => {
-                if(currentQuery.includes('topic')) {
-                    return `topic=${e.target.value}`
-                } else {
-                    return `${currentQuery}&topic=${e.target.value}`
-                }               
-            })
-            navigate(`/articles?topic=${e.target.value}`);
         }
-      };
+        else {
+            getAllArticles().then((articles) => {
+                setArticlesList(articles)
+                setIsLoading(false)
+            })
+        }
+    }, [queries])
 
-    function filterByTopic () {
-        return (
-            <form >
-            <label htmlfor='chooseTopic'> Filter By Topic</label>
-            <select name='chooseTopic' onChange={selectHandler}>
-            <option >Show all</option>
-            {topicList.map(({slug}) => {
-            return <option  value={slug}>{slug}</option>;
-          })}
-        </select>
-        
-        </form>
-            )    
-    }
+    const topicHandler = (e) => {
+        if(e.target.value !== 'Show all') {
+
+            setTopicQuery(e.target.value)
+        } else {
+            setQueries('')
+        }
+    };
+
+
 
     function sortHandler(e) {
-        e.preventDefault()
-        if(e.target.value !== 'placeholder'){
-            if(topic.length) {
-                setQueries(`topic=${topic}&${e.target.value}`)
-                navigate(`/articles?topic=${topic}&${e.target.value}`)
-            } else {
-               setQueries(`${e.target.value}`) 
-               navigate(`/articles?${e.target.value}`)
-            }
-            
-          
-         
-        }
-         
+        if(e.target.value.length) {setSortByQuery(e.target.value)
+    }}
 
+    
+
+
+
+    function displayArticleList() {
+        return isLoading ? <p>Loading all articles...</p> : (
+            <ul className="articleList">
+                {articlesList.map(({ author, title, created_at, topic, comment_count, votes, article_id }) => {
+                    return (
+                        <ArticleCard key={article_id} author={author} title={title} created_at={created_at} topic={topic} comment_count={comment_count} votes={votes} article_id={article_id} />
+                    )
+                })}
+            </ul>
+        )
     }
 
-    function sortBy () {
+    function handleQuery (e) {
+       e.preventDefault()
+       if(topicQuery.length) {
+        if(sortByQuery.length) {
+            setQueries(`topic=${topicQuery}&${sortByQuery}`)
+            navigate(`/articles?topic=${topicQuery}&${sortByQuery}`)
+        } else {
+            setQueries(`topic=${topicQuery}`)
+            navigate(`/articles?topic=${topicQuery}`)
+        }
+       } else {
+        setQueries(`${sortByQuery}`)
+        navigate(`/articles?${sortByQuery}`)
+       }
+    }
+
+    function makeQuery () {
         return (
-            <form>
+            <form onSubmit={(e) => {
+                handleQuery(e);
+              }}>
+                <label htmlfor='chooseTopic'> Filter By Topic</label>
+                <select name='chooseTopic' onChange={topicHandler}>
+                    <option >Show all</option>
+                    {topicList.map(({ slug }) => {
+                        return <option value={slug}>{slug}</option>;
+                    })}
+                </select>
                 <label htmlFor="sortby">Sort by</label>
-                <select name='sortBy' onChange = {sortHandler}>
+                <select name='sortBy' onChange={sortHandler}>
                     <option value='placeholder'></option>
                     <option value='sortby=created_at'>Date: newest first</option>
                     <option value='sortby=created_at&order=asc'>Date: oldest first</option>
@@ -102,28 +120,13 @@ export const Articles = ()=> {
                     <option value='sortby=author&order=asc'>Author: A to Z</option>
                     <option value='sortby=author'>Author: Z to A</option>
                 </select>
+                <button type='submit'>Apply</button>
             </form>
         )
     }
-
-   
-
-   function displayArticleList () {
-    return isLoading ? <p>Loading all articles...</p>:(
-        <ul className="articleList">
-            {articlesList.map(({author, title, created_at, topic, comment_count, votes, article_id})=> {
-                return (
-                    <ArticleCard key={article_id} author={author} title={title} created_at={created_at} topic={topic} comment_count={comment_count} votes={votes} article_id={article_id}/>
-                )
-            })}
-        </ul>
-    )
-   }
-
     return (
         <section>
-            {filterByTopic()}
-            {sortBy()}
+            {makeQuery()}
             {displayArticleList()}
         </section>
     )
