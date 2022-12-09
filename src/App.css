@@ -174,10 +174,64 @@ nav {
   font-size: smaller;
   
 }
+/* comments */
+
+.comment_header {
+  background-color:#201520;
+  
+  color: #F3F7F3;
+ 
+  font-size: small;
+}
 @media only screen and (min-width: 600px) {
+
+  .titles h1 {
+    font-size: x-large;
+    text-shadow: 2px 2px #F3F7F3;
+    
+  }
+  
+  .comment_header {
+    width: 50%;
+    margin: auto;
+  }
+
   .article_list {
     display: flex;
     flex-wrap: wrap;
     
+  }
+
+  .article_card {
+    border: 2px solid #FF6A07;
+    margin: auto;
+    width: 300px;
+    list-style: none;
+  }
+
+  .full_article h1 {
+    width: 70%;
+    margin: auto;
+  }
+  
+  .full_article h2 {
+    width: 70%;
+    margin: auto;
+    
+  }
+  
+  .full_article p {
+    width: 70%;
+    margin: auto;
+    
+  }
+
+  .article_actions {
+    width: 70%;
+    margin: auto;
+  }
+  .landing_page_articles  {
+    width: 300px;
+    margin: auto;
   }
 }

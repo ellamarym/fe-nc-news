@@ -54,8 +54,8 @@ export const CommentCard = ({author, created_at, votes, body, comment_id})=> {
     
     return (
         commentDeleted ? <h4>Comment Deleted!</h4> :
-        <li key={comment_id} className='commentCard'>
-            <section className="commentHeader">
+        <li key={comment_id} className='comment_card'>
+            <section className="comment_header">
                 <h4>Author: {author}</h4>
                 <h4>Created at: {created_at}</h4>
             </section>

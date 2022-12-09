@@ -25,7 +25,7 @@ export const CommentList = ({articleID, displayedCommentCount, setDisplayedComme
     function displayCommentList () {
         
         return isLoading ? <p>Loading all comments...</p>:(
-            <ul>  
+            <ul className="comment_list">  
                 
                 {commentList.map(({author, created_at, votes, body, comment_id})=> {
                     return (
