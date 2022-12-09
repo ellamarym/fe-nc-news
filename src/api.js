@@ -7,19 +7,25 @@ const ncNewsApi = axios.create({
 export const getAllArticles = () => {
     return ncNewsApi.get("/articles").then((response) => {
       return response.data.articles;
-    });
+    }).catch((err) => {
+        return {error: err.response.data.msg}
+     });
   };
 
 export const getIndividualArticle = (articleID) => {
     return ncNewsApi.get(`/articles/${articleID}`).then((response)=> {
         return response.data.article;
+    }).catch((err) => {
+       return {error: err.response.data.msg}
     })
 }
 
 export const getCommentsByArticleId = (articleID) => {
     return ncNewsApi.get(`/articles/${articleID}/comments`).then((response) => {
         return response.data.comments;
-    })
+    }).catch((err) => {
+        return {error: err.response.data.msg}
+     })
 }
 
 export const upVoteArticleById = (articleID) => {
@@ -28,7 +34,9 @@ export const upVoteArticleById = (articleID) => {
     }
     return ncNewsApi.patch(`/articles/${articleID}`, patchBody).then((response) => {
         return response.data.article;
-    })
+    }).catch((err) => {
+        return {error: err.response.data.msg}
+     })
 }
 
 export const downVoteArticleById = (articleID) => {
@@ -37,48 +45,79 @@ export const downVoteArticleById = (articleID) => {
     }
     return ncNewsApi.patch(`/articles/${articleID}`, patchBody).then((response) => {
         return response.data.article;
-    })
+    }).catch((err) => {
+        return {error: err.response.data.msg}
+     })
 }
 
 export const upVoteCommentById = (commentID) => {
     const patchBody = {inc_votes: 1}
     return ncNewsApi.patch(`/comments/${commentID}`, patchBody).then((response) => {
         return response.data.comment
-    })
+    }).catch((err) => {
+        return {error: err.response.data.msg}
+     })
 }
 
 export const downVoteCommentById = (commentID) => {
     const patchBody = {inc_votes: -1}
     return ncNewsApi.patch(`/comments/${commentID}`, patchBody).then((response) => {
         return response.data.comment
-    })
+    }).catch((err) => {
+        return {error: err.response.data.msg}
+     })
 }
 
 export const postCommentByArticleId = (articleID, comment) => {
-    const newComment = {
-        username: 'tickle122',
-        body: comment
-    }
+  
     
-    return ncNewsApi.post(`/articles/${articleID}/comments`, newComment).then((response) => {
+    return ncNewsApi.post(`/articles/${articleID}/comments`, comment).then((response) => {
         return response.data.comment;
-    })
+    }).catch((err) => {
+        return {error: err.response.data.msg}
+     })
 }
 
 export const getAllTopics = () => {
     return ncNewsApi.get(`/topics`).then((response) => {
         return response.data.topics
-    })
+    }).catch((err) => {
+        return {error: err.response.data.msg}
+     })
 } 
 
 export const getAllUsers = () => {
     return ncNewsApi.get(`/users`).then((response)=> {
         return response.data.users
+    }).catch((err) => {
+        return {error: err.response.data.msg}
+     })
+}
+
+export const getArticleByQuery = (queries) => {
+ return ncNewsApi.get(`/articles?${queries}`).then((response)=> {
+    console.log(queries)
+    return response.data.articles;
+ }).catch((err) => {
+    return {error: err.response.data.msg}
+ })
+}
+
+export const deleteCommentById = (commentID) => {
+    return ncNewsApi.delete(`/comments/${commentID}`).then(()=> {
+    }).catch((err) => {
+        return {error: err.response.data.msg}
+     })
+}
+
+export const getMostVotesArticle = () => {
+    return ncNewsApi.get(`/articles?sortby=votes`).then((response) => {
+        return response.data.articles
     })
 }
 
-export const getArticleByTopic = (slug) => {
- return ncNewsApi.get(`/articles?topic=${slug}`).then((response)=> {
-    return response.data.articles;
- })
+export const getMostRecentArticle = () => {
+    return ncNewsApi.get(`/articles?sortby=created_at`).then((response) => {
+        return response.data.articles
+    })
 }

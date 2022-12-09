@@ -10,7 +10,7 @@ export const CommentList = ({articleID, displayedCommentCount, setDisplayedComme
     const[commentList, setCommentList] = useState([])
     const [commentInputted, setCommentInputted] = useState('')
    const [newComment, setNewComment] = useState('')
-   const{user} = useContext(UserContext)
+   
     
     useEffect(() => {
         setIsLoading(true)
@@ -20,7 +20,7 @@ export const CommentList = ({articleID, displayedCommentCount, setDisplayedComme
         })
     },[])
    
-   
+  
 
     function displayCommentList () {
         
