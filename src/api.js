@@ -96,7 +96,7 @@ export const getAllUsers = () => {
 
 export const getArticleByQuery = (queries) => {
  return ncNewsApi.get(`/articles?${queries}`).then((response)=> {
-    
+    console.log(queries)
     return response.data.articles;
  }).catch((err) => {
     return {error: err.response.data.msg}
@@ -108,4 +108,16 @@ export const deleteCommentById = (commentID) => {
     }).catch((err) => {
         return {error: err.response.data.msg}
      })
+}
+
+export const getMostVotesArticle = () => {
+    return ncNewsApi.get(`/articles?sortby=votes`).then((response) => {
+        return response.data.articles
+    })
+}
+
+export const getMostRecentArticle = () => {
+    return ncNewsApi.get(`/articles?sortby=created_at`).then((response) => {
+        return response.data.articles
+    })
 }
