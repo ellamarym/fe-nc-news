@@ -11,7 +11,7 @@ export const CommentForm = ({ articleID, setDisplayedCommentCount, commentInputt
   
     function handlesubmit(e) {
         e.preventDefault()
-       if(commentInputted.body.length) {
+       if(commentInputted.body) {
            setFinishedCommenting(true)
            
            
@@ -43,7 +43,7 @@ export const CommentForm = ({ articleID, setDisplayedCommentCount, commentInputt
             : null }
             <form onSubmit={(e) => { handlesubmit(e) }}>
                 <label>Add Comment</label>
-                <input type="text" id="comment-input" name="comment-input" onChange={handleCommentInputChange}></input>
+                <input type="text" required id="comment-input" name="comment-input" onChange={handleCommentInputChange}></input>
                 <button type='submit'>Submit</button>
             </form>
              

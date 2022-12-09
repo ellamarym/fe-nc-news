@@ -1,9 +1,9 @@
 /* 
-#F4EFF2 WHITE
-#DCA57D BROWN
-#F54300 ORGANEY
-#868A89 GREY
-#24222A DARK BLUE
+#F6F0F3 white
+#87B0BB light blue
+#F4BC25 yellow
+#99785C brown
+#413B3E dark blue
 */
 * {
   padding: 0;
@@ -14,63 +14,39 @@
 .App {
   text-align: center;
   background-color: #F4EFF2;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-Header {
-  background-color: #24222A ;
-  color: #F4EFF2;
-  display: grid;
-}
+/* HEADER */
 
-header section {
-  background-color: #F54300;
-}
-.commentHeader{
-  border-top: #F54300 solid 2px;
-  background-color: #F4EFF2;
-  color: #24222A;
-}
-
-.commentCard p {
-  
-  background-color: #24222A;
-  color: #F4EFF2;
-}
-
-.navBar {
-  background-color: #F4EFF2;
-  color: #F54300;
+nav {
+  background-color: #87b087BB;
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
+  height: 20px
 }
 
-.navBar li {
-  width: fit-content;
+.nav_link {
+  margin: 1px 10px;
+  font-size: small;
+}
+.titles{
+  background-color: #413b3e;
   
 }
-
-.articleCard {
-  border: #F54300 solid 5px;
-  background-color: #24222A;
-  color: #F4EFF2;
-  list-style-type: none;
-  width: 300px;
-  height: 300px;
-  margin: 10px auto;
-  
+.titles h1 {
+  font-size: large;
+  color: #F6F0F3;
 }
 
-.articleTitle {
-  background-color: #F54300;
-  color: #F4EFF2;
+.titles h3 {
+  font-size: medium;
+  color: #F4BC25;
+  font-style: italic;
 }
 
-li {
-  list-style-type: none;
-}
-#header-user-image{
-  width: 40px;
-}
+
+
 
 @media only screen and (min-width: 600px) {
   .articleList {
