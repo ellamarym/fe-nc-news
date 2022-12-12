@@ -90,11 +90,16 @@ nav {
 
 /* Landing page */
 
-.landing_page_articles  {
+.landing_page_headers  {
   background-color: #FF6A07;
   border-bottom: 2px solid #201520;
   color: #F3F7F3;
   font-size: small;
+}
+
+.landing_page_articles  {
+  
+  list-style: none;
 }
 
 /* Article card*/
@@ -190,6 +195,11 @@ nav {
     text-shadow: 2px 2px #F3F7F3;
     
   }
+
+  .landing_page_articles  {
+    display: flex;
+    flex-wrap: wrap;
+  }
   
   .comment_header {
     width: 50%;
@@ -225,7 +235,12 @@ nav {
     margin: auto;
     
   }
-
+  .topic_card  {
+    width: 40%;
+    margin: auto;
+    padding-bottom: 30px;
+  }
+  
   .article_actions {
     width: 70%;
     margin: auto;
